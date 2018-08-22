@@ -14,7 +14,7 @@
           <el-form-item>
             <el-button class="btn"
                        type="primary"
-                       @click="login"
+                       @click="loginDone"
                        :loading="isLogining"
             >
               登录
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+  import {mapActions} from 'vuex'
 
   export default {
     name: "login",
@@ -40,16 +41,55 @@
       }
     },
     methods: {
-      async login () {
+      // async login () {
+      //   this.isLogining = true
+      //   const data = await this.$axios.post('/login', this.formData)
+      //   this.isLogining = false
+      //   if(data.code == 200) {
+      //     this.$router.push('/layout/index')
+      //   } else {
+      //     this.$message.error(data.msg)
+      //   }
+      // },
+      loginDone () {
         this.isLogining = true
-        const data = await this.$axios.post('/login', this.formData)
-        this.isLogining = false
-        if(data.code == 200) {
-          this.$router.push('/layout/index')
-        } else {
-          this.$message.error(data.msg)
-        }
-      }
+        // 不使用mapActions
+        // this.$store.dispatch('login', this.formData).then((isLogin) => {
+        //   this.isLogining = false
+        //   if(isLogin) {
+        //     this.$router.push('/layout/index')
+        //   }
+        // }).catch(err => {
+        //   this.isLogining = false
+        //   this.$message.error('连接超时，请检查您的网络')
+        // })
+
+        // 使用mapActions
+        // this.login(this.formData).then( isLogin => {
+        //   console.log(isLogin)
+        //   this.isLogining = false
+        //   if (isLogin) {
+        //     this.$router.push('/layout/index')
+        //   }
+        // }).catch (err => {
+        //   console.log(err)
+        //   this.isLogining = false
+        //   this.$message.error('连接超时，请检查您的网络')
+        // })
+
+        // 不使用actions
+        this.$axios.post('/login', this.formData).then(res => {
+          this.isLogining = false
+          console.log(res)
+          if(res.code == 200){
+            this.$store.commit('SET_USERINFO', res.data)
+            this.$router.push('/layout/index')
+          } else {
+            this.$message.error(res.msg)
+          }
+        })
+      },
+      // ...mapActions(['login'])
     }
   }
 </script>

@@ -40,8 +40,24 @@
       </el-menu>
     </div>
     <div class="main-content">
-      <div class="title">
-        <h2 style="text-align: center;">后台操作系统</h2>
+      <div class="title clearfix">
+        <h2 class="title-text">
+          <span>后台操作系统</span>
+          <el-dropdown class="user-handle">
+            <div class="avatar-wrap">
+              <img :src="userInfo.avatar" v-if="userInfo.avatar">
+            </div>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="handlePerson">
+                个人中心
+              </el-dropdown-item>
+              <el-dropdown-item @click.native="handleLogout">
+                退出登录
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </h2>
+
       </div>
       <div class="content">
         <router-view></router-view>
@@ -51,8 +67,32 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+
   export default {
-    name: "layout"
+    name: "layout",
+    computed: {
+      ...mapState(['userInfo'])
+    },
+    methods: {
+      handlePerson () {
+        this.$router.push('/layout/personCenter')
+      },
+      handleLogout () {
+        this.$axios.get('/logout').then(res => {
+          if(res.code == 200){
+            let payload = {userInfo: '', avatar: '', email: '', desc: ''}
+            this.$message.success('退出登录成功')
+            this.$store.commit('SET_USERINFO', payload)
+            this.$router.push('/login')
+          } else {
+            this.$message.error(res.msg)
+          }
+        }).catch(err => {
+          this.$message.error(err)
+        })
+      }
+    }
   }
 </script>
 
@@ -82,6 +122,25 @@
   }
 
   .title h2 {
+    text-align: center;
     font-weight: 400;
+  }
+
+  .user-handle {
+    float: right;
+    margin-right: 40px;
+    margin-top: 5px;
+  }
+
+  .avatar-wrap {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .avatar-wrap img {
+    display: block;
+    width: 100%;
   }
 </style>
