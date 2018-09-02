@@ -4,7 +4,6 @@ import state from './state'
 import persistedstate from 'vuex-persistedstate'
 
 Vue.use(Vuex)
-
 const store = new Vuex.Store({
   state,
   mutations: {
