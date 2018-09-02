@@ -8,7 +8,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/login',
+      hidden: true
     },
     {
       path: '/login',
@@ -23,12 +24,14 @@ const router = new Router({
         title: '我是布局页面'
       },
       component: () => import('@/views/Layout/layout'),
+      redirect: '/layout/index',
       children: [
         {
           path: 'index',
           meta: {
             title: '首页'
           },
+          hidden: true,
           component: () => import('@/views/index')
         },
         {
@@ -56,6 +59,29 @@ const router = new Router({
           },
           name: 'editCategory',
           component: () => import('@/views/category/edit')
+        },
+        {
+          path: 'book',
+          meta: {
+            title: '图书管理'
+          },
+          component: () => import('@/views/book/index')
+        },
+        {
+          path: 'book/edit',
+          meta: {
+            title: '编辑图书'
+          },
+          name: 'editBook',
+          component: () => import('@/views/book/edit')
+        },
+        {
+          path: 'book/add',
+          meta: {
+            title: '添加图书'
+          },
+          name: 'addBook',
+          component: () => import('@/views/book/add')
         }
       ]
     }

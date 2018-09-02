@@ -37,12 +37,24 @@
           <i class="el-icon-setting"></i>
           <span slot="title">导航四</span>
         </el-menu-item>
+        <el-submenu index="5">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>图书管理</span>
+          </template>
+          <el-menu-item index="/layout/book">
+            图书列表
+          </el-menu-item>
+          <el-menu-item index="/layout/book/add">
+            添加图书
+          </el-menu-item>
+        </el-submenu>
       </el-menu>
     </div>
     <div class="main-content">
       <div class="title clearfix">
         <h2 class="title-text">
-          <span>后台操作系统</span>
+          <span>云书后台操作系统</span>
           <el-dropdown class="user-handle">
             <div class="avatar-wrap">
               <img :src="userInfo.avatar" v-if="userInfo.avatar">
@@ -59,6 +71,11 @@
         </h2>
 
       </div>
+      <div class="breadcrumb-wrap">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <div class="content">
         <router-view></router-view>
       </div>
@@ -72,6 +89,9 @@
   export default {
     name: "layout",
     computed: {
+      routes () {
+        return this.$route.matched
+      },
       ...mapState(['userInfo'])
     },
     methods: {
@@ -92,10 +112,19 @@
           this.$message.error(err)
         })
       }
+    },
+    created() {
+      console.log(this.$route)
+      console.log(this.$router)
     }
   }
 </script>
 
+<style>
+  .layout .el-submenu .el-menu-item {
+    overflow: hidden;
+  }
+</style>
 <style scoped>
   .nav-bar {
     position: fixed;
@@ -103,8 +132,15 @@
     bottom: 0;
     left: 0;
     width: 202px;
+    overflow: hidden;
     height: 100%;
     background: rgb(84, 92, 100);
+  }
+
+  .nav-bar ul {
+    background: rgb(84, 92, 100);
+    border-right: rgb(84, 92, 100);
+    overflow: hidden;
   }
 
   .main-content {

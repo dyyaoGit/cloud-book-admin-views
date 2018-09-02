@@ -4,23 +4,23 @@
     <div class="login-box" style="margin-top: 20px;">
       <h2 style="text-align: center; margin-top: 26px;">请登录</h2>
       <div class="login">
-        <el-form :model="formData" label-width="60px" label-position="left">
+        <el-form :model="formData" label-width="60px" >
           <el-form-item label="用户名">
             <el-input v-model="formData.username"></el-input>
           </el-form-item>
           <el-form-item label="密码">
             <el-input v-model="formData.password" type="password"></el-input>
           </el-form-item>
-          <el-form-item>
-            <el-button class="btn"
-                       type="primary"
-                       @click="loginDone"
-                       :loading="isLogining"
-            >
-              登录
-            </el-button>
-          </el-form-item>
         </el-form>
+        <div  class="btn-wrap">
+          <el-button class="btn"
+                     type="primary"
+                     @click="loginDone"
+                     :loading="isLogining"
+          >
+            登录
+          </el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -124,6 +124,11 @@
   .login {
     margin-top: 50px;
     padding: 0 30px;
+  }
+
+  .btn-wrap {
+    text-align: center;
+    padding: 30px;
   }
 
   .btn {

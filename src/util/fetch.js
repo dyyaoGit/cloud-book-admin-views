@@ -4,7 +4,7 @@ import router from '../router'
 const baseURI = '/api/admin'
 const instance = axios.create({
   baseURL: baseURI,
-  timeout: 5000
+  timeout: 15000
 })
 
 const fetch = {

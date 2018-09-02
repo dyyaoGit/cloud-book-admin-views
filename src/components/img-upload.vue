@@ -6,6 +6,7 @@
     :show-file-list="false"
     :on-success="uploadSuccess">
     <img :src="currentValue" class="upload-icon" v-show="currentValue">
+    <i class="el-icon-plus my-upload-icon" v-show="!currentValue"></i>
   </el-upload>
 </template>
 
@@ -50,6 +51,7 @@
 
 <style>
   .my-upload {
+    position: relative;
     float: left;
     display: block;
     border: 1px solid #f1f1f1;
@@ -60,5 +62,14 @@
   .my-upload .upload-icon {
     display: block;
     width: 100%;
+  }
+
+  .my-upload-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #aaa;
+    font-size: 24px;
   }
 </style>

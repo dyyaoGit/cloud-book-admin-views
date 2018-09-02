@@ -46,7 +46,24 @@
         this.$router.push({name: 'editCategory', query: {id}})
       },
       handleDelete (id) {
-
+        this.$confirm('此操作将永久删除该分类,请确认该分类下没有图书。', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios.delete(`/category/${id}`)
+            .then(res => {
+            console.log(res);
+            if(res.code == 200){
+              this.getData()
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       }
     },
     created() {

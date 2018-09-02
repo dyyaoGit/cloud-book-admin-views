@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="" enctype="multipart/form-data"></form>
+<label>
+  <input type="file" id="input">
+</label>
+<script>
+  let oInput = document.querySelector('#input')
+
+  oInput.addEventListener('change', upload)
+  function upload(event) {
+    let file = this.files[0]
+    let formData = new FormData()
+    formData.append('img', file, file.name)
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://abc.com/service/seting')
+    xhr.setRequestHeader('Content-Type', 'multipart/form-data')
+    xhr.send(formData)
+    xhr.onreadystatechange = function () {
+      if(xhr.readyState == 4 && xhr.status == 200) {
+        let json = JSON.parse(xhr.responseText)
+        console.log(json)
+      }
+    }
+  }
+</script>
+</body>
+</html>

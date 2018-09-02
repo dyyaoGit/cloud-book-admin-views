@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     name: 'App'
   }
@@ -21,4 +22,6 @@
     display: block;
     clear: both;
   }
+
+  li {list-style: none}
 </style>
